@@ -26,7 +26,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 		Localidad localidad = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 			String sql = "SELECT id, nombre, id_provincia" 
 					+ " FROM localidad"
@@ -62,8 +62,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 		
 		try {
 
-			c = ConnectionManager.getConnection();
-			//SQL
+		 
 
 			String sql = " INSERT INTO LOCALIDAD( nombre, id_provincia) "
 					+ " VALUES (?,?) ";
@@ -105,7 +104,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 		int updatedRows = 0;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 
 			String sql =" UPDATE LOCALIDAD "

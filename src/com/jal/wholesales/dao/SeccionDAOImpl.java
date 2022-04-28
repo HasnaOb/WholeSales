@@ -24,12 +24,12 @@ public class SeccionDAOImpl implements SeccionDAO{
 		Seccion seccion = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 			String sql = "SELECT id, nombre " 
 					+ " FROM seccion"
 					+ " WHERE id = ?";
-			System.out.println("SeccionDAO.findBy:SQL= "+sql);
+		 
 			
 			//create prepared statement
 			preparedStatement = c.prepareStatement(sql, 
@@ -60,7 +60,7 @@ public class SeccionDAOImpl implements SeccionDAO{
 		
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 
 			String sql = " INSERT INTO SECCION(id, nombre) "
@@ -102,7 +102,7 @@ public class SeccionDAOImpl implements SeccionDAO{
 		int updatedRows = 0;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 
 			String sql =" UPDATE SECCION "

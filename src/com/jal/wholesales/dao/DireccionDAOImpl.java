@@ -29,7 +29,7 @@ public  class DireccionDAOImpl implements DireccionDAO  {
 		Direccion direccion = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 			String sql ="SELECT id, id_empresa, codigo_postal, id_localidad, calle_num " 
 					+ " FROM direccion "
@@ -64,7 +64,7 @@ public  class DireccionDAOImpl implements DireccionDAO  {
 		List<Direccion> results = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 			String sql ="SELECT id, id_empresa, codigo_postal, id_localidad, calle_num " 
 					+ " FROM direccion ";
@@ -107,7 +107,7 @@ public  class DireccionDAOImpl implements DireccionDAO  {
 		
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 
 			String sql = " INSERT INTO DIRECCION(id_empresa, codigo_postal, id_localidad, calle_num) "
@@ -154,7 +154,7 @@ public  class DireccionDAOImpl implements DireccionDAO  {
 		int updatedRows = 0;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 
 			String sql =" UPDATE Direccion "

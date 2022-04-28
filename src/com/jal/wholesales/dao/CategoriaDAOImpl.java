@@ -31,7 +31,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 		Categoria categoria = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 			String sql = "SELECT id, nombre, id_categoria_padre" 
 					+ " FROM categoria"
@@ -67,7 +67,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+				 
 				//SQL
 				String sql = "SELECT id, nombre, id_categoria_padre" 
 						+ " FROM categoria"
@@ -111,7 +111,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+				 
 				//SQL
 				queryString = new StringBuilder("SELECT id, nombre, id_categoria_padre" 
 						+ " FROM categoria");
@@ -180,8 +180,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 		ResultSet rs = null;
 		
 		try {
-
-			c = ConnectionManager.getConnection();
+ 
 			//SQL
 
 			String sql = " INSERT INTO CATEGORIA(nombre, id_categoria_padre) "
@@ -225,7 +224,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 		int updatedRows = 0;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 
 			String sql =" UPDATE CATEGORIA "

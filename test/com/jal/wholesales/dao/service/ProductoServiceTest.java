@@ -65,14 +65,14 @@ public class ProductoServiceTest {
 
 		ProductoCriteria pc = new ProductoCriteria();
 		
-		pc.setIdEmpresa(2L);
-		pc.setNombre("zapatos");
-		pc.setIdCategoria(12L);
-		pc.setIdMarca(4L);
-		pc.setIdSeccion(3L);
-		pc.setIdPais(7L);
-		pc.setPrecio(200.0d);
-		pc.setDescripcion("zapatos numer 34");
+//		pc.setIdEmpresa(2L);
+//		pc.setNombre("zapatos");
+//		pc.setIdCategoria(12L);
+//		pc.setIdMarca(4L);
+//		pc.setIdSeccion(3L);
+//		pc.setIdPais(7L);
+		pc.setPrecio(200d);
+//		pc.setDescripcion("zapatos numer 34");
 		
 		
 		 

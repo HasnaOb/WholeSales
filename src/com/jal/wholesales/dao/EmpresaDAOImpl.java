@@ -38,7 +38,7 @@ public    class EmpresaDAOImpl implements EmpresaDAO {
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 				String sql = "SELECT id, nombre, cif, id_tipo_empresa, nombre_usuario, email, contrasena " 
 						+ " FROM empresa"
@@ -87,7 +87,7 @@ public    class EmpresaDAOImpl implements EmpresaDAO {
 			Empresa empresa = null;
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 				String sql = "SELECT id, nombre, cif, id_tipo_empresa, nombre_usuario, email, contrasena" 
 						+ " FROM empresa"
@@ -132,7 +132,7 @@ public    class EmpresaDAOImpl implements EmpresaDAO {
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 				String sql = "SELECT id, nombre, cif, id_tipo_empresa, nombre_usuario, email, contrasena" 
 						+ " FROM empresa"
@@ -180,7 +180,7 @@ public    class EmpresaDAOImpl implements EmpresaDAO {
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 				queryString = new StringBuilder("SELECT id, nombre, cif, id_tipo_empresa, nombre_usuario, email, contrasena" 
 						+ " FROM empresa");
@@ -242,10 +242,7 @@ public    class EmpresaDAOImpl implements EmpresaDAO {
 			
 		}
 	 
-	 
-
-	 
-	 
+	  
 		public  Empresa  create(Connection c, Empresa e) 
 				throws   DataException{
 //		 
@@ -259,7 +256,7 @@ public    class EmpresaDAOImpl implements EmpresaDAO {
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 
 				String sql = " INSERT INTO EMPRESA(nombre, cif, id_tipo_empresa, nombre_usuario, email, contrasena) "

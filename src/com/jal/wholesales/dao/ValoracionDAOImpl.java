@@ -32,7 +32,7 @@ public class ValoracionDAOImpl implements ValoracionDAO{
 		Valoracion valoracion = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 			String sql = "SELECT id, valoracion, comentario, id_producto,id_empresa " 
 					+ " FROM valoracion "
@@ -77,7 +77,7 @@ public class ValoracionDAOImpl implements ValoracionDAO{
 		
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 
 			String sql = " INSERT INTO VALORACION(valoracion, comentario, id_producto,id_empresa) "
@@ -123,7 +123,7 @@ public class ValoracionDAOImpl implements ValoracionDAO{
 		int updatedRows = 0;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 
 			String sql =" UPDATE VALORACION "

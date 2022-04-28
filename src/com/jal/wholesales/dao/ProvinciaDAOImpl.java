@@ -24,12 +24,12 @@ public class ProvinciaDAOImpl implements ProvinciaDAO {
 		Provincia provincia = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 			String sql = "SELECT id, nombre, id_pais" 
 					+ " FROM provincia"
 					+ " WHERE id = ?";
-			System.out.println("ProvinciaDAO.findBy:SQL= "+sql);
+		 
 			
 			//create prepared statement
 			preparedStatement = c.prepareStatement(sql, 
@@ -61,7 +61,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO {
 			List<Provincia> results = null;
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 				String sql ="SELECT id, nombre, id_pais" 
 						+ " FROM provincia ";
@@ -69,7 +69,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO {
 
 			 
 
-				System.out.println("ProvinciaDAO.findBy:SQL= "+sql);
+			 
 
 				//create prepared statement
 				preparedStatement = c.prepareStatement(sql, 
@@ -109,7 +109,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO {
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 
 				String sql = " INSERT INTO PROVINCIA( nombre, id_pais) "
@@ -152,7 +152,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO {
 			int updatedRows = 0;
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 
 				String sql =" UPDATE PROVINCIA "

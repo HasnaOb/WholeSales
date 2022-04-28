@@ -24,7 +24,7 @@ public class PaisDAOImpl implements PaisDAO {
 		Pais pais = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 			String sql = "SELECT id, nombre" 
 					+ " FROM pais"
@@ -60,7 +60,7 @@ public class PaisDAOImpl implements PaisDAO {
 		
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 
 			String sql = " INSERT INTO PAIS( nombre) "
@@ -103,7 +103,7 @@ public class PaisDAOImpl implements PaisDAO {
 		int updatedRows = 0;
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 
 			String sql =" UPDATE PAIS "

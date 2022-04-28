@@ -191,10 +191,10 @@ private EmpresaService empresaService = null;
  
 	public static void main(String args[] ) throws ServiceException {
 		EmpresaServiceTest test = new EmpresaServiceTest();
-			test.testLogin();
+//			test.testLogin();
 //			test.testFindById();
 	//	test.testFindByEmail();
-//		test.findByNombre("gUCCI");
+test.findByNombre("gUCCI");
 //	test.testFindByCriteria();
 			
 //	test.testSignUp();

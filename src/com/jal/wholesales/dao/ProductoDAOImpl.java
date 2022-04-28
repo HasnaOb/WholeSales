@@ -18,27 +18,28 @@ import com.wholesales.exception.DataException;
 import com.wholesales.exception.InstanceNotFoundException;
 
 public class ProductoDAOImpl implements ProductoDAO{
-	private static Logger logger = LogManager.getLogger(ValoracionDAOImpl.class);
+	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class);
 	
 	public ProductoDAOImpl(){
 		
 	}
 	
-
+	 @Override
 	public  Producto findById(Connection c, long id) 
 			throws DataException  {
+		if(logger.isDebugEnabled()) logger.debug("id = {} ", id);
 		 
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		Producto producto = null;
 		try {
 
-			c = ConnectionManager.getConnection();
 			//SQL
 			String sql = "SELECT id, nombre, descripcion, precio, id_categoria, id_empresa, id_seccion, id_marca, id_pais" 
 					+ " FROM producto"
 					+ " WHERE id = ?";
-			System.out.println("ProductoDAO.findBy:SQL= "+sql);
+
+			logger.debug(sql);
 			
 			//create prepared statement
 			preparedStatement = c.prepareStatement(sql, 
@@ -49,10 +50,12 @@ public class ProductoDAOImpl implements ProductoDAO{
 			
 			if (rs.next()) {
 				producto = loadNext(c, rs);
+				if(logger.isDebugEnabled()) logger.debug("No se encontró el producto {}", id);
 			}
 			
 		} catch (SQLException e) {			
-			e.printStackTrace();
+			logger.warn(e.getMessage(), e);
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.close(rs);
 			JDBCUtils.close(preparedStatement);
@@ -68,14 +71,14 @@ public class ProductoDAOImpl implements ProductoDAO{
 		List<Producto> results = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 			String sql = " SELECT nombre, descripcion, precio, id_categoria, id_empresa, id_seccion, id_marca, id_pais " 
 				 
 					+ " FROM producto ";
-
+			logger.debug(sql);
 		 
-			System.out.println("ProductoDAO.findBy:SQL= "+sql);
+		 
 
 			//create prepared statement
 			preparedStatement = c.prepareStatement(sql, 
@@ -92,7 +95,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 			}
 
 		} catch (SQLException e) {			
-			e.printStackTrace();
+			logger.warn(e.getMessage(), e);
 		} finally {
 			JDBCUtils.close(rs);
 			JDBCUtils.close(preparedStatement);
@@ -104,18 +107,19 @@ public class ProductoDAOImpl implements ProductoDAO{
 
 	public List<Producto> findByNombre (Connection c,String nombre)
 				throws  DataException {
+		 if(logger.isDebugEnabled()) logger.debug("nombre = {} ", nombre);
 	 
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		
 		try {
 	
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 			String sql = "SELECT id, nombre, descripcion, precio, id_categoria, id_empresa, id_seccion, id_marca, id_pais" 
 					+ " FROM producto"
 					+ " WHERE upper(nombre) like upper (?)";
-			System.out.println("EmpresaDAO.findBy:SQL= "+sql);
+			if(logger.isDebugEnabled()) logger.debug(sql);
 			
 			//create prepared statement
 			preparedStatement = c.prepareStatement(sql, 
@@ -134,7 +138,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 			return producto;
 	
 		} catch (SQLException ex) {			
-			ex.printStackTrace();
+			logger.warn(ex.getMessage(), ex);
 			throw new DataException("No se encontro la empresa " + nombre);
 			
 		} finally {
@@ -146,14 +150,16 @@ public class ProductoDAOImpl implements ProductoDAO{
 	}
 		public List<Producto> findByCriteria (Connection c,ProductoCriteria producto)
 				throws  DataException {
-		 
+			
+			 if(logger.isDebugEnabled()) logger.debug("criteria = {}", producto);
+			 
 			PreparedStatement preparedStatement = null;
 			ResultSet rs = null;
 			StringBuilder queryString = null;
 			
 			try {
 		
-				c = ConnectionManager.getConnection();
+				 
 				//SQL
 				queryString = new StringBuilder("SELECT id, nombre, descripcion, precio, id_categoria, id_empresa, id_seccion, id_marca, id_pais"
 						+ "	FROM producto");
@@ -171,7 +177,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 				first = false;
 			}
 			
-			if(producto.getPrecio() !=0) {
+			if(producto.getPrecio() !=null) {
 				
 				DAOUtils.addClause(queryString, first, "  precio = ?");
 				first = false;
@@ -201,7 +207,8 @@ public class ProductoDAOImpl implements ProductoDAO{
 				DAOUtils.addClause(queryString, first, " id_pais = ? ");
 				first = false;
 			}
-			System.out.println(queryString);
+			if(logger.isDebugEnabled()) logger.debug(queryString);
+			
 			preparedStatement = c.prepareStatement(queryString.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			int i=1;
@@ -212,29 +219,29 @@ public class ProductoDAOImpl implements ProductoDAO{
 			if (producto.getDescripcion() != null)
 				preparedStatement.setString(i++, "%" + producto.getDescripcion() + "%");
 			
-			if (producto.getPrecio() != 0)
-				preparedStatement.setString(i++, "%" + producto.getPrecio() + "%");
-			
+			if (producto.getPrecio() != null)
+				preparedStatement.setDouble(i++,  producto.getPrecio());
+			 	
 			
 			if (producto.getIdCategoria() != null)
-				preparedStatement.setString(i++, "%" + producto.getIdCategoria() + "%");
+				preparedStatement.setLong(i++,  producto.getIdCategoria()  );
 
 			
 			
 			if (producto.getIdEmpresa() != null)
-				preparedStatement.setString(i++, "%" + producto.getIdEmpresa() + "%");
+				preparedStatement.setLong(i++, producto.getIdEmpresa());
 			
 			
 			
 			if (producto.getIdSeccion() != null)
-				preparedStatement.setString(i++, "%" + producto.getIdSeccion() + "%");
+				preparedStatement.setLong(i++,producto.getIdSeccion() );
 			
 			
 			if (producto.getIdMarca() != null)
-				preparedStatement.setString(i++, "%" + producto.getIdMarca() + "%");
+				preparedStatement.setLong(i++,    producto.getIdMarca());
 		
 			if (producto.getIdPais() != null)
-				preparedStatement.setString(i++, "%" + producto.getIdPais() + "%");
+				preparedStatement.setLong(i++,producto.getIdPais() );
 			 
 			
 			rs = preparedStatement.executeQuery();
@@ -250,7 +257,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 			
 			
 			} catch (SQLException ex) {			
-				ex.printStackTrace();
+				logger.warn(ex.getMessage(), ex);
 				throw new DataException("No se encontro el producto " + ex);
 				
 			} finally {
@@ -275,12 +282,13 @@ public class ProductoDAOImpl implements ProductoDAO{
 		
 		try {
 
-			c = ConnectionManager.getConnection();
+			 
 			//SQL
 
 			String sql = " INSERT INTO PRODUCTO( nombre, descripcion, precio, id_categoria, id_empresa, id_seccion, id_marca, id_pais) "
 					+ " VALUES (?,?,?,?,?,?,?,?) ";
-
+			if(logger.isDebugEnabled()) logger.debug(sql);
+			
 			//create prepared statement
 			preparedStatement = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -305,7 +313,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 		
 
 		} catch (SQLException ex) {			
-			ex.printStackTrace();
+			logger.warn(ex.getMessage(), ex);
 			throw new DataException(producto.getNombre(), ex);
 		} finally {
 			JDBCUtils.close(rs);
@@ -318,12 +326,14 @@ public class ProductoDAOImpl implements ProductoDAO{
 	
 	public  void update(Connection c,Producto producto) throws InstanceNotFoundException,DataException {
 		 
+		if(logger.isDebugEnabled()) logger.debug("Empresa = {}" + producto);
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		int updatedRows = 0;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 
 			String sql =" UPDATE PRODUCTO "
@@ -338,6 +348,8 @@ public class ProductoDAOImpl implements ProductoDAO{
 					+ "  ID = ? ";
 
 			//create prepared statement
+			
+			if(logger.isDebugEnabled()) logger.debug(sql);
 			preparedStatement = c.prepareStatement(sql);
 
 			int i  = 1;
@@ -362,6 +374,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 		
 		} catch (SQLException ex) {			
 			logger.warn(ex.getMessage(), ex);
+			throw new DataException("Producto: "+producto.getId(),ex);
 		} finally {
 			JDBCUtils.close(rs);
 			JDBCUtils.close(preparedStatement);
@@ -381,7 +394,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 			String sql = " delete "
 					+ " from producto"
 					+ " where id = ?";
-			
+			if(logger.isDebugEnabled()) logger.debug(sql);
 			preparedStatement = c.prepareStatement(sql,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
@@ -391,7 +404,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 				throw new InstanceNotFoundException(""+id);
 			}
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			logger.warn(sqle.getMessage(), sqle);
 			throw new DataException(""+id, sqle);
 		} finally {
 			JDBCUtils.close(rs);

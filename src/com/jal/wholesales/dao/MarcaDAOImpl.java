@@ -25,7 +25,7 @@ public  class MarcaDAOImpl implements MarcaDAO {
 			Marca marca = null;
 			try {
 
-				c = ConnectionManager.getConnection();
+				 
 				//SQL
 				String sql = "SELECT id, nombre" 
 						+ " FROM marca"
@@ -62,7 +62,7 @@ public  class MarcaDAOImpl implements MarcaDAO {
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 
 				String sql = " INSERT INTO MARCA( nombre) "
@@ -105,7 +105,7 @@ public  class MarcaDAOImpl implements MarcaDAO {
 			int updatedRows = 0;
 			try {
 
-				c = ConnectionManager.getConnection();
+				 
 				//SQL
 
 				String sql =" UPDATE MARCA "

@@ -22,13 +22,12 @@ public class TipoEmpresaDAOImpl implements TipoEmpresaDAO {
 			TipoEmpresa tipoEmpresa = null;
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 				String sql = "SELECT id, nombre" 
 						+ " FROM tipo_empresa"
 						+ " WHERE id = ? ";
-				System.out.println("TipoEmpresaDAO.findBy:SQL= "+sql);
-				
+				 
 				//create prepared statement
 				preparedStatement = c.prepareStatement(sql, 
 							ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -58,8 +57,7 @@ public class TipoEmpresaDAOImpl implements TipoEmpresaDAO {
 			
 			try {
 
-				con = ConnectionManager.getConnection();
-				//SQL
+			 
 
 				String sql = " INSERT INTO TIPOEMPRESA(id, nombre) "
 						+ " VALUES (?,?) ";
@@ -98,7 +96,7 @@ public class TipoEmpresaDAOImpl implements TipoEmpresaDAO {
 			int updatedRows = 0;
 			try {
 
-				con = ConnectionManager.getConnection();
+				 
 				//SQL
 
 				String sql =" UPDATE TIPOEMPRESA "

@@ -24,7 +24,7 @@ public class TipoEstadoDAOImpl implements TipoEstadoDAO {
 			TipoEstado tipoEstado = null;
 			try {
 
-				c = ConnectionManager.getConnection();
+				 
 				//SQL
 				String sql = "SELECT id, nombre" 
 						+ " FROM tipo_estado"
@@ -59,7 +59,7 @@ public class TipoEstadoDAOImpl implements TipoEstadoDAO {
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 
 				String sql = " INSERT INTO TIPO_ESTADO(id, nombre) "
@@ -103,7 +103,7 @@ public class TipoEstadoDAOImpl implements TipoEstadoDAO {
 			int updatedRows = 0;
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 
 				String sql =" UPDATE TIPOS_ESTADO "

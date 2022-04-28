@@ -36,7 +36,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 		PedidoDTO pedido = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 			String sql = "SELECT id, fecha_creacion, total, id_tipo_estado, id_empresa_comp, id_direccion" 
 					+ " FROM pedido"
@@ -73,7 +73,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 		List<PedidoDTO> results = null;
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 			String sql = " SELECT id, fecha_creacion, total, id_tipo_estado, id_empresa, id_direccion " 
 				 
@@ -112,7 +112,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 		
 		try {
 
-			c = ConnectionManager.getConnection();
+		 
 			//SQL
 
 			String sql = " INSERT INTO PEDIDO( fecha_creacion, total, id_tipo_estado, id_empresa, id_direccion) "
@@ -164,8 +164,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 		ResultSet rs = null;
 		int updatedRows = 0;
 		try {
-
-			c = ConnectionManager.getConnection();
+ 
 			//SQL
 
 			String sql =" UPDATE PEDIDO "

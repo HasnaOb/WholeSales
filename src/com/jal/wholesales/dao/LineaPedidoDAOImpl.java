@@ -30,7 +30,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			LineaPedido lineaPedido = null;
 			try {
 
-				c = ConnectionManager.getConnection();
+				 
 				//SQL
 				String sql ="SELECT id, precio, unidades, total, fecha_creacion, id_pedido, id_producto" 
 						+ " FROM lineapedido"
@@ -65,8 +65,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 		ResultSet rs = null;
 		List<LineaPedido> results = null;
 		try {
-
-			c = ConnectionManager.getConnection();
+ 
 			//SQL
 			String sql = " SELECT id, precio, unidades, total, fecha_creacion, id_pedido, id_producto " 
 				 
@@ -121,7 +120,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			
 			try {
 
-				c = ConnectionManager.getConnection();
+			 
 				//SQL
 
 				String sql = " INSERT INTO LINEAPEDIDO( precio, unidades, total, fecha_creacion, id_pedido, id_producto) "
