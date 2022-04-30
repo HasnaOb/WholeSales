@@ -1,6 +1,7 @@
 package com.jal.wholesales.dao;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.jal.wholesales.model.Marca;
 import com.wholesales.exception.DataException;
@@ -13,6 +14,8 @@ public interface MarcaDAO {
 	public Marca create(Connection c, Marca m) throws DataException;
 
 	public void update(Connection c, Marca m) throws InstanceNotFoundException, DataException;
+
+	List<Marca> findByAll(Connection c) throws InstanceNotFoundException, DataException;
 
 	/*
 	 * void deleteById(Connection c, Long id) throws InstanceNotFoundException,

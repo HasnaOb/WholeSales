@@ -64,8 +64,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return producto;
 	}
 
-	public List<Producto> findByAll() throws DataException {
-		Connection c = null;
+	public List<Producto> findByAll(Connection c) throws DataException {
+	 
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		List<Producto> results = null;
@@ -170,9 +170,14 @@ public class ProductoDAOImpl implements ProductoDAO {
 				first = false;
 			}
 
-			if (producto.getPrecio() != null) {
+			if (producto.getPrecioMin() != null) {
 
-				DAOUtils.addClause(queryString, first, "  precio = ?");
+				DAOUtils.addClause(queryString, first, "  precio >= ?");
+				first = false;
+			}
+			if (producto.getPrecioMax() != null) {
+
+				DAOUtils.addClause(queryString, first, "  precio <= ?");
 				first = false;
 			}
 			if (producto.getIdCategoria() != null) {
@@ -213,8 +218,10 @@ public class ProductoDAOImpl implements ProductoDAO {
 			if (producto.getDescripcion() != null)
 				preparedStatement.setString(i++, "%" + producto.getDescripcion() + "%");
 
-			if (producto.getPrecio() != null)
-				preparedStatement.setDouble(i++, producto.getPrecio());
+			if (producto.getPrecioMin() != null)
+				preparedStatement.setDouble(i++, producto.getPrecioMin());
+			if (producto.getPrecioMax() != null)
+				preparedStatement.setDouble(i++, producto.getPrecioMax());
 
 			if (producto.getIdCategoria() != null)
 				preparedStatement.setLong(i++, producto.getIdCategoria());

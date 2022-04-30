@@ -13,6 +13,8 @@ public interface ProductoDAO {
 
 	public Producto findById(Connection c, long id) throws InstanceNotFoundException, DataException;
 
+	public List<Producto> findByAll(Connection c) throws DataException;
+
 	public List<Producto> findByNombre(Connection c, String nombre) throws DataException;
 
 	/*
@@ -28,7 +30,5 @@ public interface ProductoDAO {
 
 	public Results<Producto> findByCriteria(Connection c, ProductoCriteria criteria, int startIndex, int pageSize)
 			throws DataException;
-
-	 
 
 }

@@ -8,7 +8,9 @@ public class ProductoCriteria extends AbstractValueObject {
 	
 	private String nombre;
 	private String descripcion;
-	private Double precio;
+	private Double precioMin;
+	private Double precioMax;
+	
 	private Long idCategoria;
 	private Long idEmpresa;
 	private Long idMarca;
@@ -35,14 +37,23 @@ public class ProductoCriteria extends AbstractValueObject {
 		this.descripcion = descripcion;
 	}
 
-	public Double getPrecio() {
-		return precio;
+	public Double getPrecioMin() {
+		return precioMin;
 	}
 
-	public void setPrecio(Double precio) {
-		this.precio = precio;
+	public void setPrecioMin(Double precioMin) {
+		this.precioMin = precioMin;
 	}
 
+	public Double getPrecioMax() {
+		return precioMax;
+	}
+
+	public void setPrecioMax(Double precioMax) {
+		this.precioMax = precioMax;
+	}
+
+ 
 	public Long getIdCategoria() {
 		return idCategoria;
 	}

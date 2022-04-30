@@ -1,6 +1,8 @@
 package com.jal.wholesales.dao.service;
 
 
+import java.util.List;
+
 import com.company.wholesales.service.MarcaService;
 import com.company.wholesales.service.impl.MarcaServiceImpl;
 import com.jal.wholesales.model.Marca;
@@ -20,6 +22,14 @@ private MarcaService marcaService = null;
 		Marca marca= marcaService.findById(1);
 		System.out.println(marca.getId());
 		System.out.println(marca.getNombre());
+
+	}
+	public void testFindByAll() throws ServiceException {
+		
+		System.out.println("Testing findByAll...");	        
+		List<Marca>marca= marcaService.findByAll();
+		
+		System.out.println(marca);
 
 	}
 	public void testCreate() {
@@ -53,7 +63,8 @@ private MarcaService marcaService = null;
 	public static void main(String args[] ) throws ServiceException {
 		MarcaServiceTest test = new MarcaServiceTest();
 //			test.testCreate();
-		test.testFindById();
+//		test.testFindById();
+		test.testFindByAll();
 			/*test.testSignUp();*/
 	}
 	

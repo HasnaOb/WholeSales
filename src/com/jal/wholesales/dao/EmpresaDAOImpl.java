@@ -286,7 +286,7 @@ public class EmpresaDAOImpl implements EmpresaDAO {
 			// SQL
 
 			String sql = " UPDATE Empresa " + " SET  NOMBRE = ?," + "      CIF = ?," + "      ID_TIPO_EMPRESA = ?,"
-					+ "      NOMBRE_USUARIO = ?," + "      EMAIL = ?," + "      CONTRASENA = ?" + "  ID = ? ";
+					+ "      NOMBRE_USUARIO = ?," + "      CONTRASENA = ?" + "  WHERE ID = ? ";
 			if (logger.isDebugEnabled())
 				logger.debug(sql);
 			// create prepared statement
@@ -298,8 +298,8 @@ public class EmpresaDAOImpl implements EmpresaDAO {
 			JDBCUtils.setParameter(preparedStatement, i++, e.getCif());
 			JDBCUtils.setParameter(preparedStatement, i++, e.getIdTipoEmpresa());
 			JDBCUtils.setParameter(preparedStatement, i++, e.getNombreUsuario());
-			JDBCUtils.setParameter(preparedStatement, i++, e.getEmail());
 			JDBCUtils.setParameter(preparedStatement, i++, e.getContrasenaEncriptada());
+			JDBCUtils.setParameter(preparedStatement, i++, e.getId());
 
 			updatedRows = preparedStatement.executeUpdate();
 			if (updatedRows != 1) {

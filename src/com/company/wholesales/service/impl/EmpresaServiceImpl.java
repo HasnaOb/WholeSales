@@ -267,6 +267,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 		ResultSet rs = null;
 
 		try {
+			c = ConnectionManager.getConnection();
 			String sql = " delete " + " from empresa" + " where id = ?";
 
 			preparedStatement = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);

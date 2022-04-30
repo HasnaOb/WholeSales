@@ -2,6 +2,7 @@ package com.company.wholesales.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,6 +45,31 @@ public class MarcaServiceImpl implements MarcaService {
 		} catch (SQLException sqle) {
 			logger.error("findById: " + id + ": " + sqle.getMessage(), sqle);
 			throw new DataException(id + "", sqle);
+
+		} finally {
+
+			JDBCUtils.closeConnection(c, commitOrRollback);
+		}
+		return marca;
+	}
+	@Override
+	public List<Marca> findByAll() throws DataException, ServiceException {
+		 
+		Connection c = null;
+		List<Marca> marca = null;
+		boolean commitOrRollback = false;
+		try {
+			c = ConnectionManager.getConnection();
+
+			c.setAutoCommit(false);
+
+			marca = marcaDAO.findByAll(c);
+
+			commitOrRollback = true;
+
+		} catch (SQLException sqle) {
+			logger.error( sqle.getMessage(), sqle);
+			throw new DataException(sqle);
 
 		} finally {
 

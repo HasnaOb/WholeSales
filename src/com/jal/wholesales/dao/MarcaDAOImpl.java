@@ -5,11 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.jal.wholesales.dao.util.ConnectionManager;
 import com.jal.wholesales.dao.util.JDBCUtils;
 import com.jal.wholesales.model.Marca;
 import com.wholesales.exception.DataException;
@@ -55,6 +56,39 @@ public class MarcaDAOImpl implements MarcaDAO {
 
 		}
 		return marca;
+	}
+	@Override
+	public List<Marca> findByAll(Connection c) throws InstanceNotFoundException, DataException {
+		 
+
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		List<Marca> marcaList = new ArrayList<Marca>();
+		try {
+
+			// SQL
+			String sql = "SELECT id, nombre" + " FROM marca";
+			logger.debug(sql);
+
+			// create prepared statement
+			preparedStatement = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			 
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				marcaList.add(loadNext(rs));
+			}
+
+		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
+			throw new DataException(ex);
+		} finally {
+			JDBCUtils.close(rs);
+			JDBCUtils.close(preparedStatement);
+
+		}
+		return marcaList;
 	}
 
 	public Marca create(Connection c, Marca m) throws DataException {

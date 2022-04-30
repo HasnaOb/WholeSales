@@ -2,6 +2,7 @@ package com.company.wholesales.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ import com.jal.wholesales.dao.SeccionDAO;
 import com.jal.wholesales.dao.SeccionDAOImpl;
 import com.jal.wholesales.dao.util.ConnectionManager;
 import com.jal.wholesales.dao.util.JDBCUtils;
+import com.jal.wholesales.model.Seccion;
 import com.jal.wholesales.model.Seccion;
 import com.wholesales.exception.DataException;
 import com.wholesales.exception.ServiceException;
@@ -50,6 +52,32 @@ public class SeccionServiceImpl implements SeccionService {
 		}
 		return seccion;
 	}
+	@Override
+	public List<Seccion> findByAll() throws DataException, ServiceException {
+		 
+		Connection c = null;
+		List<Seccion> seccion = null;
+		boolean commitOrRollback = false;
+		try {
+			c = ConnectionManager.getConnection();
+
+			c.setAutoCommit(false);
+
+			seccion = seccionDAO.findByAll(c);
+
+			commitOrRollback = true;
+
+		} catch (SQLException sqle) {
+			logger.error( sqle.getMessage(), sqle);
+			throw new DataException(sqle);
+
+		} finally {
+
+			JDBCUtils.closeConnection(c, commitOrRollback);
+		}
+		return seccion;
+	}
+
 
 	@Override
 	public Seccion create(Seccion s)
