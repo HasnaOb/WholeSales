@@ -31,7 +31,7 @@ public class EmpresaTest {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}finally {
-					JDBCUtils.closeConnection(c);
+					JDBCUtils.closeConnection(c, false);
 				}
 		}
 		

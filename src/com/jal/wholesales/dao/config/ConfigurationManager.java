@@ -55,7 +55,7 @@ public class ConfigurationManager {
 
 			String value = (String) properties.getProperty(parameterName);       
 			return value;
-		} catch (IOException t) {
+		} catch (Throwable t) {
 			logger.fatal("Unable to load system configuration '"+configurationName+"':"+ t.getMessage(), t);
 			return null;
 		}

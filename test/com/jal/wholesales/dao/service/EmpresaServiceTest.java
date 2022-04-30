@@ -84,7 +84,7 @@ private EmpresaService empresaService = null;
 			 
 			e.printStackTrace();
 		}finally {
-			JDBCUtils.closeConnection(c);
+			JDBCUtils.closeConnection(c, false);
 		}
 	}
 	
@@ -107,6 +107,7 @@ private EmpresaService empresaService = null;
 		
 		
 	}
+	
 
 	 public void testLogin() {
 		Empresa empresa = null;
@@ -188,13 +189,45 @@ private EmpresaService empresaService = null;
 		}
 	}
 	
+	public void testUpdate() throws ServiceException {
+		System.out.println("Testing Update...");
+		System.out.println();
+
+		Empresa empresa = new Empresa();
+		try {
+			empresa.setNombre("Distrinucciones Alejandro");
+			empresa.setNombreUsuario("Alejandro");
+			empresa.setCif("B1234567");
+			empresa.setEmail("disctrinucciones@gmail.com");
+			empresa.setContrasena("abc12345");
+			empresa.setIdTipoEmpresa(1L);
+			System.out.println("Empresa actualizada");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	 
+		 
+	 
+		  
+		 
+//		 ec.setNombre("prada");
+	 
+		 
+		
+		 
+		System.out.println(empresa);
+		 
+		
+		
+	}
  
 	public static void main(String args[] ) throws ServiceException {
 		EmpresaServiceTest test = new EmpresaServiceTest();
 //			test.testLogin();
 //			test.testFindById();
 	//	test.testFindByEmail();
-test.findByNombre("gUCCI");
+		//test.findByNombre("gUCCI");
+		test.testUpdate();
 //	test.testFindByCriteria();
 			
 //	test.testSignUp();

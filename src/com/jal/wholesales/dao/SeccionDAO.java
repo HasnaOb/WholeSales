@@ -7,10 +7,9 @@ import com.wholesales.exception.DataException;
 
 public interface SeccionDAO {
 
-	 
+	Seccion findById(Connection c, long id) throws DataException;
 
-	Seccion findById(Connection c, long id);
 	public Seccion create(Connection c, Seccion seccion) throws DataException;
-	public void update( Connection c, Seccion seccion) throws DataException;
-}
 
+	public void update(Connection c, Seccion seccion) throws DataException;
+}

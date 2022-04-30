@@ -4,7 +4,8 @@ import com.wholesales.exception.MailException;
 
 public interface MailService {
 
-	public void sendEmail (String to,String subject, String plainText)
-			throws MailException;
+	void sendEmail(String from, String subject, String text, String[] to) throws MailException;
+
+	public void sendHTML(String from, String subject, String htmlMessage, String... to) throws MailException;
 
 }

@@ -3,6 +3,9 @@ package com.company.wholesales.service.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.company.wholesales.service.LocalidadService;
 import com.jal.wholesales.dao.LocalidadDAO;
 import com.jal.wholesales.dao.LocalidadDAOImpl;
@@ -13,106 +16,97 @@ import com.wholesales.exception.DataException;
 import com.wholesales.exception.ServiceException;
 
 public class LocalidadServiceImpl implements LocalidadService {
-	
-		private LocalidadDAO localidadDAO = null;
-		
-		
-		public LocalidadServiceImpl() {
-			 
-			localidadDAO = new LocalidadDAOImpl();
+
+	private Logger logger = LogManager.getLogger(LocalidadServiceImpl.class);
+	private LocalidadDAO localidadDAO = null;
+
+	public LocalidadServiceImpl() {
+
+		localidadDAO = new LocalidadDAOImpl();
+	}
+
+	@Override
+	public Localidad findById(long id) throws DataException, ServiceException {
+		if (logger.isDebugEnabled())
+			logger.debug("id: {}", id);
+		Connection c = null;
+		Localidad localidad = null;
+		boolean commitOrRollback = false;
+		try {
+			c = ConnectionManager.getConnection();
+
+			c.setAutoCommit(false);
+
+			localidad = localidadDAO.findById(c, id);
+
+			commitOrRollback = true;
+
+		} catch (SQLException sqle) {
+			logger.error("findById: " + id + ": " + sqle.getMessage(), sqle);
+			throw new DataException(id + "", sqle);
+
+		} finally {
+			JDBCUtils.closeConnection(c, commitOrRollback);
 		}
-		@Override
-		public Localidad findById (long id) throws DataException, ServiceException {
-			 Connection c=null;
-			Localidad localidad = null;
-			boolean commitOrRollback = false;
-			try  {
-				c = ConnectionManager.getConnection();					
-				
-				c.setAutoCommit(false);
-				
-				localidad =localidadDAO.findById(c, id);
-									
-				commitOrRollback = true;
-				
+		return localidad;
+	}
 
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
-				throw new ServiceException(id+"", sqle);
-				
-			} catch (DataException de) { // si viene del DAO ya seria innecesario
-				de.printStackTrace();	
-				throw de;
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new ServiceException(e);
-				
-			} finally {
-				JDBCUtils.closeConnection(c, commitOrRollback);
+	@Override
+	public Localidad create(Localidad l) throws DataException, ServiceException {
+
+		Connection c = null;
+
+		boolean commitOrRollback = false;
+		Localidad localidad = null;
+		try {
+			c = ConnectionManager.getConnection();
+
+			// inicio de la transaccion, es como un beggin
+			c.setAutoCommit(false);
+
+			localidadDAO.create(c, l);
+
+			// fin de la transacción
+			commitOrRollback = true;
+
+		} catch (SQLException sqle) {
+			if (logger.isErrorEnabled()) {
+				logger.error(l, sqle);
 			}
-			return localidad;	
+			throw new DataException(sqle);
+
+		} finally {
+			JDBCUtils.closeConnection(c, commitOrRollback);
 		}
 
-		 
-		@Override
-	    public  Localidad create(Localidad l) 
-	            throws DataException, ServiceException {
-			
-			Connection c =null;
-			System.out.println("Creating "+l+"...");
-		 
-			boolean commitOrRollback = false;
-			Localidad localidad = null;
-	        try  {
-	            c = ConnectionManager.getConnection();
+		return localidad;
+	}
 
-	            // inicio de la transaccion, es como un beggin
-	            c.setAutoCommit(false);
+	@Override
+	public void update(Localidad l) throws ServiceException {
 
-	            localidadDAO.create(c, l);
-	            
-	            // fin de la transacción
-	            commitOrRollback = true;
+		Connection c = null;
 
-	        } catch (DataException de) { 
-	            de.printStackTrace();
-	            throw de;
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            throw new ServiceException(e);
-	        } finally {
-	            JDBCUtils.closeConnection(c, commitOrRollback);
-	        }
+		boolean commitOrRollback = false;
 
-	        return localidad;
-	    }
-		
-		@Override
-		public void update(Localidad l) throws ServiceException {
-			
-			Connection c = null;
-			 
-			boolean commit = false;
+		try {
 
-			try {
+			c = ConnectionManager.getConnection();
 
-				c = ConnectionManager.getConnection();
+			c.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 
-				c.setTransactionIsolation(
-						Connection.TRANSACTION_READ_COMMITTED);
+			c.setAutoCommit(false);
 
-				c.setAutoCommit(false);
+			localidadDAO.update(c, l);
+			commitOrRollback = true;
 
-				localidadDAO.update(c, l);
-				commit = true;
+		} catch (SQLException sqle) {
 
-			} catch (SQLException ex) {
-			 
-				throw new DataException(ex);
+			logger.error("update: " + l.getNombre() + ": " + sqle.getMessage(), sqle);
+			throw new DataException("update: " + l.getNombre() + ": " + sqle.getMessage(), sqle);
 
-			} finally {
-				JDBCUtils.closeConnection(c, commit);
-			}
+		} finally {
+			JDBCUtils.closeConnection(c, commitOrRollback);
 		}
 	}
+}

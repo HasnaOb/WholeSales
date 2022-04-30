@@ -43,7 +43,10 @@ public class ConnectionManager {
 			dataSource.setPassword(DB_PASSWORD);
 
 		} catch (Throwable t) {
-			logger.fatal("Unable to load db driver class: "+DRIVER_CLASS);
+		 
+			logger.fatal("Unable to load db driver class: {}", t.getMessage());
+			
+			System.out.println(t.getMessage());
 			System.exit(0);
 		}
 

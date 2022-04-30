@@ -22,8 +22,8 @@ private static Logger logger = LogManager.getLogger(MailServiceTest.class);
 		
 		try {
 			String from = "hasna.1310.ub@gmail.com";
-			String to = "hasna.1310.ub@gmail.com";
-			mailservice.sendEmail(from , "Test", "Testeando el mail service");
+			String to = "healer1310moebius@gmail.com";
+			mailservice.sendEmail(from , "Test", "Testeando el mail service", new String[] { to});
 			
 			logger.info("Mail a "+to+": Enviado con éxito.");
 		}catch (Exception e) {

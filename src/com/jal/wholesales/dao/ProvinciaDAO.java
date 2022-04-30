@@ -9,9 +9,11 @@ import com.wholesales.exception.InstanceNotFoundException;
 
 public interface ProvinciaDAO {
 
-	public  Provincia findById(Connection c,long id)  throws  InstanceNotFoundException,DataException;
-	 public  List<Provincia> findByPais(Connection c ,long idPais) throws DataException;
-	 public Provincia create(Connection c ,Provincia provincia) throws DataException;
-	 public void update(Connection c,Provincia provincia) throws DataException;
-}
+	public Provincia findById(Connection c, long id) throws InstanceNotFoundException, DataException;
 
+	public List<Provincia> findByPais(Connection c, long idPais) throws DataException;
+
+	public Provincia create(Connection c, Provincia provincia) throws DataException;
+
+	public void update(Connection c, Provincia provincia) throws DataException;
+}

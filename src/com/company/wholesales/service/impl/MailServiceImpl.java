@@ -6,80 +6,91 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 import com.company.wholesales.service.MailService;
+import com.jal.wholesales.dao.config.ConfigurationManager;
+import com.jal.wholesales.dao.util.ConstantConfigUtils;
 import com.wholesales.exception.MailException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
- 
 
 public class MailServiceImpl implements MailService {
-	
-	
+	private static final String CFGM_PFX = "mail.";
+	private static final String SERVER = CFGM_PFX + "server";
+	private static final String PORT = CFGM_PFX + "port";
+	private static final String ACCOUNT = CFGM_PFX + "account";
+	private static final String PASSWORD = CFGM_PFX + "password";
+
 	private static Logger logger = LogManager.getLogger(MailServiceImpl.class);
 
-
-		public MailServiceImpl() {
-			
-		}
-	 
-	@Override
-	public void sendEmail(String to, String subject, String plainText) throws MailException {
-		 
-		if(logger.isDebugEnabled()) logger.debug("to: {}; subject: {}; plainText: {}", to, subject, plainText);
-		
-		try {
-			Email email = new SimpleEmail();
-			email.setHostName("smtp.googlemail.com");
-			email.setSmtpPort(465);
-			email.setAuthenticator(new DefaultAuthenticator("wings.broken1310@gmail.com", PASSWORD));
-			email.setSSLOnConnect(true);
-			email.setFrom("hasna.1310.ub@gmail.com");
-			email.setSubject(subject);
-			email.setMsg(plainText);
-			email.addTo(to);
-			email.send();
-		}catch(EmailException e) {
-			logger.error("Sending to "+to+"...", e);
-			throw new MailException(e.getMessage(), e);
-		}
+	public MailServiceImpl() {
 
 	}
-	
-	
-	
-	public void sendHTML(String from, String subject, String htmlMessage, String... to) throws MailException{
+
+	@Override
+	public void sendEmail(String from, String subject, String text, String... to) throws MailException {
+
+		logger.traceEntry();
+
+		ConfigurationManager CM = ConfigurationManager.getInstance();
 
 		try {
-			// Create the email message
+			if (logger.isDebugEnabled()) {
+				logger.debug("Sending Email from " + from + " to " + to + "...");
+			}
+
+			Email email = new SimpleEmail();
+			email.setHostName(CM.getInstance().getParameter(ConstantConfigUtils.WHOLESALES_PROPERTIES, SERVER));
+			email.setSmtpPort(
+					Integer.valueOf(CM.getInstance().getParameter(ConstantConfigUtils.WHOLESALES_PROPERTIES, PORT)));
+			email.setAuthenticator(
+					(new DefaultAuthenticator(CM.getParameter(ConstantConfigUtils.WHOLESALES_PROPERTIES, ACCOUNT),
+							CM.getParameter(ConstantConfigUtils.WHOLESALES_PROPERTIES, PASSWORD))));
+			email.setSSLOnConnect(true);
+			email.setFrom(from);
+			email.setSubject(subject);
+			email.setMsg(text);
+			email.addTo(to);
+			email.send();
+
+			logger.traceExit();
+
+		} catch (EmailException ee) {
+			logger.error("Sending from " + from + " to " + to + "...", ee);
+			throw new MailException(ee.getMessage(), ee);
+		}
+	}
+
+	public void sendHTML(String from, String subject, String htmlMessage, String... to) throws MailException {
+
+		logger.traceEntry();
+
+		ConfigurationManager CM = ConfigurationManager.getInstance();
+
+		try {
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("Sending HTML from " + from + " to " + to + "...");
+			}
+
 			HtmlEmail email = new HtmlEmail();
-			email.setHostName("smtp.gmail.com");
-			email.setSmtpPort(465);
-			email.setAuthenticator(new DefaultAuthenticator("wings.broken1310@gmail.com", PASSWORD));
+			email.setHostName(CM.getParameter(ConstantConfigUtils.WHOLESALES_PROPERTIES, SERVER));
+			email.setSmtpPort(Integer.valueOf(CM.getParameter(ConstantConfigUtils.WHOLESALES_PROPERTIES, PORT)));
+			email.setAuthenticator(
+					new DefaultAuthenticator(CM.getParameter(ConstantConfigUtils.WHOLESALES_PROPERTIES, ACCOUNT),
+							CM.getParameter(ConstantConfigUtils.WHOLESALES_PROPERTIES, PASSWORD)));
 			email.setSSLOnConnect(true);
 			email.setFrom(from);
 			email.setSubject(subject);
 			email.setHtmlMsg(htmlMessage);
-
 			email.addTo(to);
-
 			email.send();
-			System.out.println("Email Sent");
-		}
-		catch(EmailException e) {
-			e.printStackTrace();
-			throw new MailException();
+
+			logger.traceExit();
+
+		} catch (EmailException ee) {
+			if (logger.isErrorEnabled()) {
+				logger.error("Sending from " + from + " to " + to + "...", ee);
+			}
+			throw new MailException(ee.getMessage(), ee);
 		}
 	}
-
-
-	
-	
-	
-	
-	
- 
-	
-	
-	
-	
-	public static final String PASSWORD = "wingsdown";
 }
